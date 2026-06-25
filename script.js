@@ -36,20 +36,35 @@ const TYPE_META = {
 const personalityQuestions = [
   ...[
     ["我倾向于在工作中寻找新的机会并承担风险。", "entrepreneurial"],
-    ["我喜欢深入研究某个领域，成为该领域的专家。", "technical"],
-    ["我擅长与不同背景的人建立联系，并享受团队合作。", "social"],
-    ["我经常有新奇的想法，并渴望将它们付诸实践。", "creative"],
-    ["我喜欢通过文字、图片或视频表达自己的观点和故事。", "contentCreator"],
     ["面对挑战和不确定性，我通常能保持积极乐观的心态。", "entrepreneurial"],
+    ["我更愿意开创自己的事业，而不是在现有框架下工作。", "entrepreneurial"],
+    ["我擅长识别市场空白或未被满足的需求。", "entrepreneurial"],
+    ["我享受制定战略并带领团队实现目标的过程。", "entrepreneurial"],
+    ["我喜欢深入研究某个领域，成为该领域的专家。", "technical"],
     ["我享受解决复杂的技术难题，并从中获得成就感。", "technical"],
-    ["我乐于倾听他人的需求，并提供帮助和支持。", "social"],
-    ["我追求工作中的独特性和艺术性，不喜欢墨守成规。", "creative"],
-    ["我对社会热点和流行趋势有敏锐的洞察力，并能迅速捕捉。", "contentCreator"],
-    ["我认为快速行动和试错比完美计划更重要。", "entrepreneurial"],
     ["我会花大量时间学习新技能，以提升自己的专业能力。", "technical"],
+    ["我注重细节和精确性，追求工作成果的完美。", "technical"],
+    ["我认为掌握一门核心技术是职业成功的关键。", "technical"],
+    ["我擅长与不同背景的人建立联系，并享受团队合作。", "social"],
+    ["我乐于倾听他人的需求，并提供帮助和支持。", "social"],
     ["我在团队中常常扮演协调者或沟通者的角色。", "social"],
+    ["我能敏锐地察觉到他人的情绪变化，并给予适当的回应。", "social"],
+    ["我享受通过沟通和协商来解决冲突，达成共识。", "social"],
+    ["我善于建立和维护长期的人际关系，并从中获得支持。", "social"],
+    ["我认为在工作中建立良好的人脉网络非常重要。", "social"],
+    ["我喜欢参与社区活动或志愿服务，与人互动。", "social"],
+    ["我经常有新奇的想法，并渴望将它们付诸实践。", "creative"],
+    ["我追求工作中的独特性和艺术性，不喜欢墨守成规。", "creative"],
     ["我喜欢用视觉或非传统的方式来表达我的想法。", "creative"],
+    ["我享受从零开始创造新事物的过程。", "creative"],
+    ["我对美学和设计有独特的见解和追求。", "creative"],
+    ["我认为打破常规、探索未知是创新的源泉。", "creative"],
+    ["我喜欢通过文字、图片或视频表达自己的观点和故事。", "contentCreator"],
+    ["我对社会热点和流行趋势有敏锐的洞察力，并能迅速捕捉。", "contentCreator"],
     ["我享受将复杂信息转化为易于理解和传播的内容。", "contentCreator"],
+    ["我擅长讲故事，能够吸引并留住听众或读者。", "contentCreator"],
+    ["我认为通过内容输出可以影响他人，建立个人品牌。", "contentCreator"],
+    ["我乐于分享自己的知识和经验，帮助他人成长。", "contentCreator"],
   ].map(([text, dimension], index) => ({
     id: `P${index + 1}`,
     phase: "personality",
@@ -65,10 +80,10 @@ const personalityQuestions = [
     ],
   })),
   {
-    title: "当团队面临一个全新的挑战时，你更倾向于：",
+    title: "当团队面临一个全新的、充满不确定性的项目时，你更倾向于：",
     options: [
-      ["立即制定创新方案，并带领团队尝试。", "entrepreneurial"],
-      ["分析现有数据和资源，寻找最佳技术解决方案。", "technical"],
+      ["感到兴奋，迫不及待地想去尝试和挑战。", "entrepreneurial"],
+      ["仔细分析所有可能的风险和收益，寻找最佳的技术解决方案。", "technical"],
       ["组织团队讨论，协调资源，让每个人发挥所长。", "social"],
       ["思考如何用独特方式呈现挑战，激发创意。", "creative"],
       ["考虑如何把这个挑战有效传达给目标受众。", "contentCreator"],
@@ -107,8 +122,8 @@ const personalityQuestions = [
   {
     title: "当你学习一项新技能时，你更倾向于：",
     options: [
-      ["快速掌握核心要点，并立即应用到实际项目。", "entrepreneurial"],
-      ["系统学习理论，并反复练习直到精通。", "technical"],
+      ["在实践中不断摸索，从失败中吸取教训。", "entrepreneurial"],
+      ["阅读专业书籍，参加高级培训，系统提升专业知识。", "technical"],
       ["寻找学习伙伴，通过交流协作共同进步。", "social"],
       ["探索不同学习方法，并做创新结合。", "creative"],
       ["记录学习过程和心得，并分享给他人。", "contentCreator"],
@@ -518,14 +533,29 @@ function handleBack() {
 }
 
 function getRankedTypes() {
+  const normalized = normalizeScores();
   return TYPE_KEYS
-    .map(key => ({ key, score: scores[key], ...TYPE_META[key] }))
-    .sort((a, b) => b.score - a.score);
+    .map(key => ({ key, score: scores[key], normalizedScore: normalized[key], ...TYPE_META[key] }))
+    .sort((a, b) => b.normalizedScore - a.normalizedScore);
 }
 
 function normalizeScores() {
-  const maxScore = Math.max(...TYPE_KEYS.map(key => scores[key]), 1);
-  return Object.fromEntries(TYPE_KEYS.map(key => [key, Math.round((scores[key] / maxScore) * 100)]));
+  const maxScores = getMaxScoresByType();
+  return Object.fromEntries(TYPE_KEYS.map(key => {
+    const maxScore = maxScores[key] || 1;
+    return [key, Math.round((scores[key] / maxScore) * 100)];
+  }));
+}
+
+function getMaxScoresByType() {
+  const maxScores = Object.fromEntries(TYPE_KEYS.map(key => [key, 0]));
+  personalityQuestions.forEach(question => {
+    TYPE_KEYS.forEach(key => {
+      const maxContribution = Math.max(...question.options.map(option => option.scores?.[key] || 0));
+      maxScores[key] += maxContribution;
+    });
+  });
+  return maxScores;
 }
 
 function recommendTracks() {
@@ -717,9 +747,10 @@ function buildPrompt(recommended = recommendTracks(), main = getRankedTypes()[0]
 - 不替我做人生决定，而是帮我缩小探索范围
 
 用户人格：
-- 主导人格：${main.label}（${main.score} 分）
-- 辅助人格：${second.label}（${second.score} 分）
+- 主导人格：${main.label}（原始分 ${main.score}，标准化 ${main.normalizedScore} / 100）
+- 辅助人格：${second.label}（原始分 ${second.score}，标准化 ${second.normalizedScore} / 100）
 - 五维分数：${JSON.stringify(scores, null, 2)}
+- 五维标准化分数：${JSON.stringify(normalizeScores(), null, 2)}
 
 用户现实条件：
 ${JSON.stringify(profile, null, 2)}
