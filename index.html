@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f8efe7" />
+  <title>女性职业转型探测器｜FemAI Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section id="welcomeScreen" class="screen welcome-screen active">
+      <nav class="topbar" aria-label="产品导航">
+        <div class="brand">
+          <span class="brand-mark">F</span>
+          <div>
+            <strong>女性职业转型探测器</strong>
+            <small>by FemAI</small>
+          </div>
+        </div>
+        <span class="demo-pill">一周 Demo</span>
+      </nav>
+
+      <div class="hero-card">
+        <p class="eyebrow">FOR WOMEN IN TRANSITION</p>
+        <h1>10 分钟，看见更适合你的下一条职业路径</h1>
+        <p class="hero-lede">
+          先通过职业人格测评识别你的优势倾向，再结合年龄阶段、城市、收入目标、技能与每周可投入时间，
+          为你生成 3 个可验证的发展赛道。
+        </p>
+
+        <div class="flow-preview" aria-label="产品流程">
+          <div><span>01</span>职业人格测评</div>
+          <div><span>02</span>现实条件采集</div>
+          <div><span>03</span>方向建议与深度 Prompt</div>
+        </div>
+
+        <button id="startBtn" class="primary-btn">开始探索</button>
+        <p class="privacy-note">Demo 不会上传你的真实数据；结果页会生成一段可复制的深度分析 Prompt。</p>
+      </div>
+    </section>
+
+    <section id="quizScreen" class="screen quiz-screen" aria-live="polite">
+      <header class="quiz-header">
+        <button id="backBtn" class="ghost-btn" type="button">← 返回</button>
+        <div class="progress-meta">
+          <span id="phaseLabel">职业人格测评</span>
+          <span id="progressText">1 / 25</span>
+        </div>
+        <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+      </header>
+
+      <article class="question-card">
+        <p id="questionKicker" class="question-kicker">第一套选择题</p>
+        <h2 id="questionTitle"></h2>
+        <p id="questionHelp" class="question-help"></p>
+        <div id="optionsWrap" class="options-wrap"></div>
+      </article>
+    </section>
+
+    <section id="resultScreen" class="screen result-screen">
+      <header class="result-hero">
+        <p class="eyebrow">职业转型探测报告</p>
+        <h1 id="mainTypeTitle"></h1>
+        <p id="mainTypeDesc" class="hero-lede"></p>
+        <div class="result-actions">
+          <button id="restartBtn" class="secondary-btn" type="button">重新测一次</button>
+          <button id="copyPromptBtn" class="primary-btn compact" type="button">复制深度分析 Prompt</button>
+        </div>
+      </header>
+
+      <section class="result-grid">
+        <article class="panel radar-panel">
+          <h2>五维人格分布</h2>
+          <canvas id="radarCanvas" width="420" height="420" aria-label="人格雷达图"></canvas>
+          <div id="scoreLegend" class="score-legend"></div>
+        </article>
+
+        <article class="panel">
+          <h2>你的 Top 3 推荐赛道</h2>
+          <div id="trackCards" class="track-cards"></div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <h2>未来 6 个月行动路线图</h2>
+        <div id="roadmap" class="roadmap"></div>
+      </section>
+
+      <section class="panel ai-panel">
+        <div>
+          <h2>想继续深入？复制这段 Prompt</h2>
+          <p>
+            女性职业转型探测器已经帮你完成第一轮方向判断。如果你想获得更细的职业规划，可以复制下方 Prompt，
+            粘贴到你自己的 AI 工具里继续追问，例如 ChatGPT、Claude、豆包、Kimi 等。
+          </p>
+        </div>
+        <pre id="promptPreview"></pre>
+      </section>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
