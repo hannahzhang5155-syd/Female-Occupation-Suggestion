@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f8efe7" />
-  <title>女性职业转型探测器｜FemAI Demo</title>
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <title>职属于她｜职业方向探测 Demo</title>
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
   <main class="app-shell">
@@ -14,8 +14,8 @@
         <div class="brand">
           <span class="brand-mark">F</span>
           <div>
-            <strong>女性职业转型探测器</strong>
-            <small>by FemAI</small>
+            <strong>职属于她</strong>
+            <small>Career Finder for Her</small>
           </div>
         </div>
         <span class="demo-pill">一周 Demo</span>
@@ -25,8 +25,8 @@
         <p class="eyebrow">FOR WOMEN IN TRANSITION</p>
         <h1>10 分钟，看见更适合你的下一条职业路径</h1>
         <p class="hero-lede">
-          先通过职业人格测评识别你的优势倾向，再结合年龄阶段、城市、收入目标、技能与每周可投入时间，
-          为你生成 3 个可验证的发展赛道。
+          先通过 V3 职业人格测评识别你的优势倾向，再结合行业兴趣、技能基础、工作方式与现实约束，
+          从 40 个职业赛道中为你生成 3 个可验证的发展方向。
         </p>
 
         <div class="flow-preview" aria-label="产品流程">
@@ -42,7 +42,7 @@
 
     <section id="quizScreen" class="screen quiz-screen" aria-live="polite">
       <header class="quiz-header">
-        <button id="backBtn" class="ghost-btn" type="button">← 返回</button>
+        <button id="backBtn" class="ghost-btn" type="button">← 上一题</button>
         <div class="progress-meta">
           <span id="phaseLabel">职业人格测评</span>
           <span id="progressText">1 / 40</span>
@@ -60,7 +60,7 @@
 
     <section id="resultScreen" class="screen result-screen">
       <header class="result-hero">
-        <p class="eyebrow">职业转型探测报告</p>
+        <p class="eyebrow">职属于她 · 探测报告</p>
         <h1 id="mainTypeTitle"></h1>
         <p id="mainTypeDesc" class="hero-lede"></p>
         <div class="result-actions">
@@ -91,7 +91,7 @@
         <div>
           <h2>想继续深入？复制这段 Prompt</h2>
           <p>
-            女性职业转型探测器已经帮你完成第一轮方向判断。如果你想获得更细的职业规划，可以复制下方 Prompt，
+            职属于她已经帮你完成第一轮方向判断。如果你想获得更细的职业规划，可以复制下方 Prompt，
             粘贴到你自己的 AI 工具里继续追问，例如 ChatGPT、Claude、豆包、Kimi 等。
           </p>
         </div>
@@ -101,6 +101,6 @@
   </main>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
