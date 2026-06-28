@@ -69,8 +69,13 @@
     <section id="resultScreen" class="screen result-screen">
       <header class="result-hero">
         <p class="eyebrow">职属于她 · 探测报告</p>
+        <div class="result-mobile-head" aria-hidden="true">
+          <span class="result-sprout">🌱</span>
+          <span id="mainMatchBadge" class="main-match-badge">--%</span>
+        </div>
         <h1 id="mainTypeTitle"></h1>
         <p id="mainTypeDesc" class="hero-lede"></p>
+        <div id="resultChips" class="result-chips"></div>
         <div class="result-actions">
           <button id="restartBtn" class="secondary-btn" type="button">重新测一次</button>
           <button id="copyPromptBtn" class="primary-btn compact" type="button">复制深度分析 Prompt</button>
