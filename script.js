@@ -1383,6 +1383,13 @@ function showResults() {
 
   $("#mainTypeTitle").textContent = `${composite.name}｜${main.label} × ${second.label}`;
   $("#mainTypeDesc").textContent = `${composite.description} 你的职场箴言是：“${composite.motto}”`;
+  $("#mainMatchBadge").textContent = `${recommended[0].match}%`;
+  $("#resultChips").innerHTML = [
+    `🤝 ${main.label}（主导）`,
+    `🚀 ${second.label}（辅助）`,
+    `💡 ${main.title}`,
+    `📈 推荐方向 ${recommended[0].match}% 契合`,
+  ].map(chip => `<span>${chip}</span>`).join("");
 
   renderRadar(rankedTypes);
   renderTracks(recommended);
@@ -1466,8 +1473,10 @@ function radarPoint(index, currentRadius, center, centerY) {
 }
 
 function renderTracks(recommended) {
+  const icons = ["🧠", "🎨", "📊"];
   $("#trackCards").innerHTML = recommended.map((track, index) => `
     <article class="track-card">
+      <span class="track-icon" aria-hidden="true">${icons[index] || "✨"}</span>
       <h3><span>${index + 1}. ${track.name}</span><span class="match-pill">${track.match}% 匹配</span></h3>
       <p>${track.description}</p>
       <div class="tag-list">${track.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
@@ -1478,14 +1487,17 @@ function renderTracks(recommended) {
 function renderRoadmap(topTrack, mainType) {
   const steps = [
     {
+      icon: "🔍",
       title: "Month 1-2｜能力盘点",
       text: `围绕「${topTrack.name}」列出你已有技能、可迁移经验和缺口，做 1 个作品/案例雏形。`,
     },
     {
+      icon: "🎯",
       title: "Month 3-4｜市场验证",
       text: "找 5-10 位目标用户访谈，设计一个最小服务包或小型内容栏目，测试真实反馈。",
     },
     {
+      icon: "🚀",
       title: "Month 5-6｜建立收入来源",
       text: `根据反馈迭代报价、内容或简历作品集。作为${mainType.label}，记得用小步快跑降低试错成本。`,
     },
@@ -1493,6 +1505,7 @@ function renderRoadmap(topTrack, mainType) {
 
   $("#roadmap").innerHTML = steps.map(step => `
     <div class="roadmap-step">
+      <span class="roadmap-icon" aria-hidden="true">${step.icon}</span>
       <strong>${step.title}</strong>
       <p>${step.text}</p>
     </div>
